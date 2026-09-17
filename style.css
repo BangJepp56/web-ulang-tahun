@@ -12,8 +12,8 @@ html, body {
 }
 body {
   font-family: 'Quicksand', system-ui, sans-serif;
-  background: #fffaf6;
-  color: #4a3345;
+  background: var(--cream);
+  color: var(--plum-700);
   -webkit-tap-highlight-color: transparent;
 }
 h1, h2, .font-display {
@@ -37,6 +37,15 @@ img {
   display: none !important;
 }
 
+/* Visible keyboard focus — previously missing entirely */
+a:focus-visible,
+button:focus-visible,
+[tabindex]:focus-visible {
+  outline: 2px solid var(--rose-500);
+  outline-offset: 3px;
+  border-radius: var(--radius-sm);
+}
+
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
     animation-duration: 0.01ms !important;
@@ -46,25 +55,41 @@ img {
   }
 }
 
-/* ================= COLOR TOKENS ================= */
+/* ================= COLOR TOKENS =================
+   Dusty rose + plum + warm gold, instead of candy pink/purple/orange.
+   Less saturated, reads as chosen rather than default-generated. */
 :root {
-  --blush-100: #ffe9f1;
-  --blush-200: #ffd1e2;
-  --blush-300: #ffb0cd;
-  --blush-400: #ff87b0;
-  --blush-500: #f45f93;
-  --blush-600: #d9407a;
-  --blush-700: #b83466;
-  --lilac-50: #f7f3fe;
-  --lilac-100: #ede2fc;
-  --lilac-300: #c39ff2;
-  --lilac-400: #a774e6;
-  --lilac-500: #8a52d4;
-  --lilac-600: #6f3cb0;
-  --lilac-700: #5c3299;
-  --peach-300: #ffb87d;
-  --peach-500: #f77d33;
-  --cream: #fffaf6;
+  --rose-50:  #fdf3f2;
+  --rose-100: #f9e3e2;
+  --rose-200: #f0c6c8;
+  --rose-300: #e2a1a6;
+  --rose-400: #d17c84;
+  --rose-500: #c05a68;   /* primary accent, replaces blush-500 */
+  --rose-600: #a44553;
+  --rose-700: #82374a;   /* headings, replaces blush-600 */
+
+  --plum-50:  #f7f2f6;
+  --plum-100: #ece1eb;
+  --plum-300: #b590b4;
+  --plum-400: #8e6b93;
+  --plum-500: #6f5177;   /* replaces lilac-500 */
+  --plum-600: #5a3f63;
+  --plum-700: #3f2c47;   /* body text, replaces lilac-700 */
+
+  --gold-300: #e8c185;
+  --gold-500: #c99a4c;   /* replaces peach-500, warmer & muted */
+
+  --cream: #fbf6f0;
+  --ink-shadow: 130, 55, 74;  /* rgb of --rose-700, used for shadow tint */
+
+  /* unified scales, used everywhere instead of ad hoc values */
+  --radius-sm: 0.5rem;
+  --radius-md: 1rem;
+  --radius-lg: 1.75rem;
+  --radius-pill: 999px;
+
+  --shadow-soft: 0 8px 28px -10px rgba(var(--ink-shadow), 0.28);
+  --shadow-lift: 0 14px 40px -12px rgba(var(--ink-shadow), 0.32);
 }
 
 /* ================= LAYOUT HELPERS ================= */
@@ -96,14 +121,11 @@ img {
 }
 
 .section-title {
-  font-size: 1.6rem;
+  font-size: clamp(1.5rem, 1.2rem + 1.3vw, 2rem);
   font-weight: 700;
-  color: var(--blush-600);
+  color: var(--rose-700);
   text-align: center;
   margin-bottom: 2.25rem;
-}
-@media (min-width: 640px) {
-  .section-title { font-size: 2rem; }
 }
 
 /* fade-up scroll reveal fallback (used only if AOS fails to load) */
@@ -123,8 +145,8 @@ img {
   backdrop-filter: blur(14px);
   -webkit-backdrop-filter: blur(14px);
   border: 1px solid rgba(255, 255, 255, 0.7);
-  border-radius: 1.5rem;
-  box-shadow: 0 10px 40px -12px rgba(217, 64, 122, 0.25);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
 }
 
 /* ================= BUTTONS ================= */
@@ -134,37 +156,40 @@ img {
   align-items: center;
   gap: 0.5rem;
   padding: 0.9rem 2.1rem;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   font-weight: 600;
   font-size: 1rem;
   transition: transform 0.15s ease, background-color 0.2s ease, opacity 0.2s ease;
-  box-shadow: 0 10px 40px -12px rgba(217, 64, 122, 0.25);
 }
 .btn:active {
   transform: scale(0.95);
 }
 .btn-primary {
-  background: var(--blush-500);
+  background: var(--rose-500);
   color: white;
+  box-shadow: var(--shadow-soft);
 }
 .btn-primary:hover {
-  background: var(--blush-600);
+  background: var(--rose-600);
 }
 .btn-peach {
-  background: var(--peach-500);
+  background: var(--gold-500);
   color: white;
+  box-shadow: var(--shadow-soft);
 }
 .btn-peach:hover {
   opacity: 0.9;
 }
 .btn-outline {
   background: white;
-  color: var(--lilac-600);
-  border: 2px solid var(--lilac-100);
-  animation: wiggle 3s ease-in-out infinite;
+  color: var(--plum-600);
+  border: 2px solid var(--plum-100);
+  /* removed infinite wiggle — a button that never stops moving stops
+     meaning anything; hover is a clearer, cheaper signal */
 }
 .btn-outline:hover {
-  border-color: var(--lilac-300);
+  border-color: var(--plum-300);
+  transform: translateY(-2px);
 }
 .btn:disabled {
   opacity: 0.6;
@@ -189,17 +214,13 @@ img {
 }
 @keyframes floatUp {
   0% { transform: translateY(0); opacity: 0; }
-  10% { opacity: 0.7; }
-  90% { opacity: 0.7; }
+  10% { opacity: 0.6; }
+  90% { opacity: 0.6; }
   100% { transform: translateY(-120vh); opacity: 0; }
 }
 @keyframes floatY {
   0%, 100% { transform: translateY(0); }
   50% { transform: translateY(-18px); }
-}
-@keyframes wiggle {
-  0%, 100% { transform: rotate(-2deg); }
-  50% { transform: rotate(2deg); }
 }
 
 /* ================= GIFT OPENING SCREEN ================= */
@@ -210,7 +231,7 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to bottom right, var(--blush-100), var(--cream), var(--lilac-100));
+  background: linear-gradient(to bottom right, var(--rose-100), var(--cream), var(--plum-100));
   transition: opacity 0.6s ease;
 }
 .gift-screen.closing {
@@ -227,14 +248,14 @@ img {
   font-family: 'Baloo 2', system-ui, sans-serif;
   font-size: 1.6rem;
   font-weight: 600;
-  color: var(--blush-600);
+  color: var(--rose-700);
   margin-bottom: 0.5rem;
   opacity: 0;
   animation: fadeInDown 0.6s ease forwards;
 }
 .gift-subtext {
   font-size: 1.05rem;
-  color: var(--lilac-600);
+  color: var(--plum-600);
   margin-bottom: 2.5rem;
   opacity: 0;
   animation: fadeInDown 0.6s ease 0.15s forwards;
@@ -247,14 +268,15 @@ img {
   position: relative;
   height: 10rem;
   width: 10rem;
-  border-radius: 2rem;
-  background: linear-gradient(to bottom right, var(--blush-400), var(--lilac-400));
-  box-shadow: 0 0 60px -10px rgba(255, 176, 205, 0.55);
+  border-radius: var(--radius-lg);
+  background: linear-gradient(to bottom right, var(--rose-400), var(--plum-400));
+  box-shadow: var(--shadow-lift);
   display: flex;
   align-items: center;
   justify-content: center;
   margin-bottom: 2.5rem;
-  animation: floatY 6s ease-in-out infinite;
+  /* was: floatY infinite — a gift you're about to open should sit still
+     until you touch it, not bob forever like a loading indicator */
 }
 @media (min-width: 640px) {
   .gift-box { height: 12rem; width: 12rem; }
@@ -290,7 +312,7 @@ img {
   top: 0;
   height: 0.75rem;
   background: rgba(255, 255, 255, 0.7);
-  border-radius: 2rem 2rem 0 0;
+  border-radius: var(--radius-lg) var(--radius-lg) 0 0;
 }
 
 /* ================= HERO (with parallax gradient photo background) ================= */
@@ -300,10 +322,9 @@ img {
   display: flex;
   align-items: center;
   justify-content: center;
-  background: linear-gradient(to bottom, var(--blush-100), var(--cream), var(--cream));
+  background: linear-gradient(to bottom, var(--rose-100), var(--cream), var(--cream));
 }
 
-/* Parallax background photo slider layer, sits behind the gradient overlay */
 .hero-bg-slider {
   position: absolute;
   inset: -12% -6%;
@@ -325,15 +346,13 @@ img {
   transform: scale(1);
 }
 
-/* Soft blush/lilac gradient wash on top of the photo layer, plus a bottom
-   fade so it blends into the page background */
 .hero-gradient-overlay {
   position: absolute;
   inset: 0;
   z-index: 1;
   background:
-    linear-gradient(125deg, rgba(255, 135, 176, 0.38) 0%, rgba(163, 116, 230, 0.32) 55%, rgba(255, 184, 125, 0.28) 100%),
-    linear-gradient(to bottom, rgba(255, 233, 241, 0.35) 0%, rgba(255, 250, 246, 0.55) 65%, var(--cream) 100%);
+    linear-gradient(125deg, rgba(192, 90, 104, 0.32) 0%, rgba(111, 81, 119, 0.28) 55%, rgba(201, 154, 76, 0.22) 100%),
+    linear-gradient(to bottom, rgba(249, 227, 226, 0.35) 0%, rgba(251, 246, 240, 0.55) 65%, var(--cream) 100%);
 }
 .hero-content {
   position: relative;
@@ -349,23 +368,17 @@ img {
 }
 .hero-title {
   white-space: pre-line;
-  font-size: 1.9rem;
+  font-size: clamp(1.9rem, 1.4rem + 2.2vw, 3rem);
   font-weight: 800;
   line-height: 1.25;
-  color: var(--blush-600);
+  color: var(--rose-700);
   text-shadow: 0 2px 18px rgba(255, 255, 255, 0.6);
-}
-@media (min-width: 640px) {
-  .hero-title { font-size: 2.5rem; }
-}
-@media (min-width: 768px) {
-  .hero-title { font-size: 3rem; }
 }
 .hero-subtitle {
   margin-top: 1.25rem;
   max-width: 28rem;
   font-size: 1.05rem;
-  color: var(--lilac-700);
+  color: var(--plum-600);
 }
 .hero-content .btn {
   margin-top: 2.5rem;
@@ -373,7 +386,7 @@ img {
 .hero-arrow {
   margin-top: 3.5rem;
   font-size: 1.5rem;
-  color: var(--blush-400);
+  color: var(--rose-400);
   animation: bounceDown 1.8s ease-in-out infinite;
 }
 @keyframes bounceDown {
@@ -401,7 +414,7 @@ img {
 }
 .envelope-card span:last-child {
   font-family: 'Baloo 2', system-ui, sans-serif;
-  color: var(--lilac-700);
+  color: var(--plum-600);
   font-weight: 600;
 }
 .letter-card {
@@ -410,7 +423,7 @@ img {
   text-align: left;
   white-space: pre-line;
   font-size: 0.95rem;
-  line-height: 1.7;
+  line-height: 1.75;
   animation: letterOpen 0.5s ease;
 }
 @keyframes letterOpen {
@@ -420,7 +433,7 @@ img {
 
 /* ================= AUTO PHOTO SLIDER (crossfade carousel) ================= */
 .slider-section {
-  background: linear-gradient(to bottom, var(--cream), var(--lilac-50));
+  background: linear-gradient(to bottom, var(--cream), var(--plum-50));
 }
 .photo-slider {
   position: relative;
@@ -429,6 +442,7 @@ img {
   margin: 0 auto;
   aspect-ratio: 1 / 1;
   overflow: hidden;
+  border-radius: var(--radius-md);
 }
 .photo-slider-track {
   position: absolute;
@@ -459,15 +473,15 @@ img {
   z-index: 3;
   height: 2.5rem;
   width: 2.5rem;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: rgba(255, 255, 255, 0.75);
   backdrop-filter: blur(6px);
-  color: var(--blush-600);
+  color: var(--rose-700);
   font-size: 1.5rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 6px 20px -6px rgba(217, 64, 122, 0.35);
+  box-shadow: var(--shadow-soft);
   transition: background-color 0.2s ease, transform 0.15s ease;
 }
 .slider-nav:hover {
@@ -485,7 +499,7 @@ img {
   bottom: 0;
   z-index: 3;
   padding: 2.5rem 1.25rem 1rem;
-  background: linear-gradient(to top, rgba(20, 8, 15, 0.65), rgba(20, 8, 15, 0));
+  background: linear-gradient(to top, rgba(30, 15, 20, 0.65), rgba(30, 15, 20, 0));
   color: white;
   font-size: 0.9rem;
   text-align: left;
@@ -502,7 +516,7 @@ img {
 .slider-dot {
   height: 0.45rem;
   width: 0.45rem;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: rgba(255, 255, 255, 0.55);
   transition: background-color 0.2s ease, width 0.2s ease;
 }
@@ -513,7 +527,7 @@ img {
 
 /* ================= MEMORIES / PHOTO GRID ================= */
 .memories-section {
-  background: var(--lilac-50);
+  background: var(--plum-50);
 }
 .photo-grid {
   display: grid;
@@ -534,7 +548,7 @@ img {
   background: white;
   padding: 0.5rem 0.5rem 1.25rem;
   border-radius: 2px;
-  box-shadow: 0 10px 40px -12px rgba(217, 64, 122, 0.25);
+  box-shadow: var(--shadow-soft);
   text-align: center;
   transition: transform 0.2s ease;
 }
@@ -546,7 +560,7 @@ img {
   width: 100%;
   overflow: hidden;
   border-radius: 2px;
-  background: var(--blush-100);
+  background: var(--rose-100);
 }
 .polaroid-photo img {
   width: 100%;
@@ -556,7 +570,7 @@ img {
 .polaroid-caption {
   margin-top: 0.5rem;
   font-size: 0.7rem;
-  color: var(--lilac-700);
+  color: var(--plum-600);
   padding: 0 0.25rem;
   display: -webkit-box;
   -webkit-line-clamp: 2;
@@ -587,7 +601,7 @@ img {
 .lightbox-img {
   max-height: 70vh;
   max-width: 90vw;
-  border-radius: 0.5rem;
+  border-radius: var(--radius-sm);
   box-shadow: 0 20px 60px rgba(0,0,0,0.5);
   object-fit: contain;
   animation: zoomIn 0.25s ease;
@@ -674,12 +688,12 @@ img {
   margin-top: 0.4rem;
   font-size: 1.1rem;
   font-weight: 600;
-  color: var(--blush-700);
+  color: var(--rose-700);
 }
 .like-message {
   margin-top: 0.5rem;
   font-size: 0.9rem;
-  color: var(--lilac-700);
+  color: var(--plum-600);
   max-height: 0;
   opacity: 0;
   overflow: hidden;
@@ -693,7 +707,7 @@ img {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  color: var(--blush-400);
+  color: var(--rose-400);
   font-size: 1.3rem;
   opacity: 0;
   pointer-events: none;
@@ -738,19 +752,19 @@ img {
   font-family: 'Baloo 2', system-ui, sans-serif;
   font-size: 1.2rem;
   font-weight: 600;
-  color: var(--lilac-600);
+  color: var(--plum-600);
   animation: fadeInDown 0.5s ease;
 }
 
 /* ================= HIDDEN MESSAGE ================= */
 .hidden-msg-section {
-  background: var(--lilac-50);
+  background: var(--plum-50);
   padding: 5rem 0 6rem;
 }
 .easter-egg-dot {
   margin-top: 1rem;
   font-size: 0.75rem;
-  color: var(--lilac-300);
+  color: var(--plum-300);
   user-select: none;
 }
 
@@ -768,8 +782,8 @@ img {
 .modal-card {
   position: relative;
   background: rgba(255,255,255,0.97);
-  border-radius: 1.5rem;
-  box-shadow: 0 10px 40px -12px rgba(217, 64, 122, 0.25);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-soft);
   max-width: 26rem;
   width: 100%;
   padding: 1.75rem;
@@ -784,11 +798,11 @@ img {
   position: absolute;
   top: 1rem;
   right: 1rem;
-  color: var(--lilac-400);
+  color: var(--plum-400);
   font-size: 1.2rem;
 }
 .modal-close:hover {
-  color: var(--lilac-600);
+  color: var(--plum-600);
 }
 .modal-heart {
   font-size: 1.8rem;
@@ -797,7 +811,7 @@ img {
 .modal-text {
   white-space: pre-line;
   font-size: 0.95rem;
-  line-height: 1.7;
+  line-height: 1.75;
 }
 
 .easter-toast {
@@ -806,13 +820,13 @@ img {
   left: 50%;
   transform: translateX(-50%);
   z-index: 80;
-  background: var(--blush-500);
+  background: var(--rose-500);
   color: white;
   font-family: 'Baloo 2', system-ui, sans-serif;
   font-weight: 600;
   padding: 0.85rem 1.5rem;
-  border-radius: 999px;
-  box-shadow: 0 0 60px -10px rgba(255, 176, 205, 0.55);
+  border-radius: var(--radius-pill);
+  box-shadow: var(--shadow-lift);
   animation: toastIn 0.3s ease;
   text-align: center;
 }
@@ -823,7 +837,7 @@ img {
 
 /* ================= FINAL SECTION ================= */
 .final-section {
-  background: linear-gradient(to bottom, var(--cream), var(--blush-100), var(--lilac-100));
+  background: linear-gradient(to bottom, var(--cream), var(--rose-100), var(--plum-100));
   padding: 6rem 0 7rem;
 }
 .final-heart {
@@ -831,30 +845,27 @@ img {
   margin-bottom: 1rem;
 }
 .final-title {
-  font-size: 1.75rem;
+  font-size: clamp(1.75rem, 1.4rem + 1.5vw, 2.25rem);
   font-weight: 800;
-  color: var(--blush-600);
+  color: var(--rose-700);
   margin-bottom: 1rem;
-}
-@media (min-width: 640px) {
-  .final-title { font-size: 2.25rem; }
 }
 .final-message {
   max-width: 28rem;
   font-size: 1.05rem;
-  color: var(--lilac-700);
+  color: var(--plum-600);
 }
 .final-submessage {
   margin-top: 0.5rem;
   font-family: 'Baloo 2', system-ui, sans-serif;
   font-size: 1.15rem;
   font-weight: 600;
-  color: var(--blush-500);
+  color: var(--rose-500);
 }
 .final-footer {
   margin-top: 4rem;
   font-size: 0.8rem;
-  color: var(--lilac-400);
+  color: var(--plum-400);
 }
 
 /* ================= MUSIC PLAYER ================= */
@@ -871,11 +882,11 @@ img {
   position: relative;
   height: 3rem;
   width: 3rem;
-  border-radius: 999px;
+  border-radius: var(--radius-pill);
   background: rgba(255,255,255,0.8);
   backdrop-filter: blur(10px);
-  box-shadow: 0 10px 40px -12px rgba(217, 64, 122, 0.25);
-  color: var(--blush-600);
+  box-shadow: var(--shadow-soft);
+  color: var(--rose-700);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -891,8 +902,8 @@ img {
   content: '';
   position: absolute;
   inset: 0;
-  border-radius: 999px;
-  border: 2px solid var(--blush-300);
+  border-radius: var(--radius-pill);
+  border: 2px solid var(--rose-300);
   animation: pulseRing 1.6s ease-out infinite;
 }
 @keyframes pulseRing {
