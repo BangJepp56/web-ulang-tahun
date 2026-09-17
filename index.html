@@ -1,0 +1,163 @@
+<!doctype html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1" />
+  <meta name="theme-color" content="#ffe9f1" />
+  <title>Happy Birthday, Zaskia 💗</title>
+  <link rel="icon" type="image/svg+xml" href="assets/heart-favicon.svg" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;600;700;800&family=Quicksand:wght@400;500;600;700&display=swap"
+    rel="stylesheet"
+  />
+  <!-- AOS (Animate On Scroll) library -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.css" />
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <!-- ============ GIFT OPENING SCREEN ============ -->
+  <div id="gift-screen" class="gift-screen">
+    <div class="floaty-layer" id="gift-floaties"></div>
+    <div class="section-wrap gift-content">
+      <p class="gift-greeting" id="gift-greeting"></p>
+      <p class="gift-subtext" id="gift-subtext"></p>
+
+      <button type="button" id="gift-box" class="gift-box" aria-label="Buka hadiah">
+        <span class="gift-icon" id="gift-icon">🎁</span>
+        <span class="gift-ribbon-v"></span>
+        <span class="gift-ribbon-h"></span>
+      </button>
+
+      <button type="button" id="gift-open-btn" class="btn btn-primary"></button>
+    </div>
+  </div>
+
+  <!-- ============ MAIN CONTENT (muncul setelah gift dibuka) ============ -->
+  <main id="main-content" class="main-content hidden">
+
+    <!-- HERO -->
+    <section class="section hero-section" id="hero-section">
+      <div class="hero-bg-slider" id="hero-bg-slider" aria-hidden="true"></div>
+      <div class="hero-gradient-overlay" aria-hidden="true"></div>
+      <div class="floaty-layer"></div>
+      <div class="section-wrap hero-content">
+        <div class="hero-icon" data-aos="zoom-in" data-aos-delay="50">🎉</div>
+        <h1 class="hero-title" id="hero-title" data-aos="fade-up" data-aos-delay="150"></h1>
+        <p class="hero-subtitle" id="hero-subtitle" data-aos="fade-up" data-aos-delay="300"></p>
+        <button type="button" id="hero-next-btn" class="btn btn-primary" data-aos="fade-up" data-aos-delay="450"></button>
+        <div class="hero-arrow">⌄</div>
+      </div>
+    </section>
+
+    <!-- SURAT ULANG TAHUN -->
+    <section class="section letter-section" id="letter-anchor">
+      <div class="section-wrap center-col">
+        <h2 class="section-title" data-aos="fade-up">Surat kecil buat Kamu 💌</h2>
+        <button type="button" id="envelope-btn" class="envelope-card" data-aos="zoom-in" data-aos-delay="100">
+          <span class="envelope-icon">✉️</span>
+          <span>Ketuk untuk membuka surat</span>
+        </button>
+        <div id="letter-card" class="letter-card hidden"></div>
+      </div>
+    </section>
+
+    <!-- MEMORIES SLIDER (auto-rotating, AOS transitions) -->
+    <section class="section slider-section">
+      <div class="section-wrap">
+        <h2 class="section-title" data-aos="fade-up">Gallery 🎞️</h2>
+        <div class="photo-slider glass-card" id="photo-slider" data-aos="fade-up" data-aos-delay="100">
+          <div class="photo-slider-track" id="photo-slider-track"></div>
+          <button type="button" class="slider-nav slider-prev" id="slider-prev" aria-label="Sebelumnya">‹</button>
+          <button type="button" class="slider-nav slider-next" id="slider-next" aria-label="Selanjutnya">›</button>
+          <div class="slider-caption" id="slider-caption"></div>
+          <div class="slider-dots" id="slider-dots"></div>
+        </div>
+      </div>
+    </section>
+
+    <!-- MEMORIES GRID -->
+    <section class="section memories-section">
+      <div class="section-wrap">
+        <h2 class="section-title" data-aos="fade-up">Sedikit Foto Random Kamu 📸</h2>
+        <div id="photo-grid" class="photo-grid"></div>
+      </div>
+    </section>
+
+    <!-- THINGS I LIKE -->
+    <section class="section like-section">
+      <div class="section-wrap">
+        <h2 class="section-title" data-aos="fade-up">Things I Like About You 💕</h2>
+        <div id="like-grid" class="like-grid"></div>
+      </div>
+    </section>
+
+    <!-- CAKE -->
+    <section class="section cake-section">
+      <div class="floaty-layer" id="cake-floaties"></div>
+      <div class="section-wrap center-col">
+        <h2 class="section-title" id="cake-title" data-aos="fade-up"></h2>
+        <div id="cake-svg-wrap" class="cake-svg-wrap" data-aos="zoom-in" data-aos-delay="100"></div>
+        <button type="button" id="blow-btn" class="btn btn-peach" data-aos="fade-up" data-aos-delay="200"></button>
+        <p id="cake-after-msg" class="cake-after-msg hidden"></p>
+      </div>
+    </section>
+
+    <!-- HIDDEN MESSAGE -->
+    <section class="section hidden-msg-section center-col">
+      <button type="button" id="hidden-msg-btn" class="btn btn-outline" data-aos="fade-up"></button>
+      <button type="button" id="easter-egg-dot" class="easter-egg-dot">✦</button>
+    </section>
+
+    <!-- FINAL -->
+    <section class="section final-section">
+      <div class="floaty-layer" id="final-floaties"></div>
+      <div class="section-wrap center-col">
+        <div class="final-heart" data-aos="zoom-in">❤️</div>
+        <h2 class="final-title" id="final-title" data-aos="fade-up" data-aos-delay="100"></h2>
+        <p class="final-message" id="final-message" data-aos="fade-up" data-aos-delay="200"></p>
+        <p class="final-submessage" id="final-submessage" data-aos="fade-up" data-aos-delay="300"></p>
+        <p class="final-footer" id="final-footer" data-aos="fade-up" data-aos-delay="400"></p>
+      </div>
+    </section>
+  </main>
+
+  <!-- ============ LIGHTBOX (overlay foto) ============ -->
+  <div id="lightbox" class="lightbox hidden">
+    <button type="button" id="lightbox-close" class="lightbox-close" aria-label="Tutup">✕</button>
+    <button type="button" id="lightbox-prev" class="lightbox-nav lightbox-prev" aria-label="Foto sebelumnya">‹</button>
+    <img id="lightbox-img" class="lightbox-img" src="" alt="" />
+    <p id="lightbox-caption" class="lightbox-caption"></p>
+    <button type="button" id="lightbox-next" class="lightbox-nav lightbox-next" aria-label="Foto selanjutnya">›</button>
+  </div>
+
+  <!-- ============ MODAL HIDDEN MESSAGE ============ -->
+  <div id="hidden-modal" class="modal-overlay hidden">
+    <div class="modal-card">
+      <button type="button" id="hidden-modal-close" class="modal-close" aria-label="Tutup">✕</button>
+      <div class="modal-heart">❤️</div>
+      <p id="hidden-modal-text" class="modal-text"></p>
+    </div>
+  </div>
+
+  <!-- ============ EASTER EGG TOAST ============ -->
+  <div id="easter-toast" class="easter-toast hidden"></div>
+
+  <!-- ============ MUSIC PLAYER ============ -->
+  <div id="music-player" class="music-player hidden">
+    <audio id="bg-audio" loop preload="none"></audio>
+    <button type="button" id="music-toggle" class="music-toggle" aria-label="Putar musik">
+      <span id="music-icon">🎵</span>
+    </button>
+  </div>
+
+  <!-- canvas-confetti dari CDN, dipakai untuk semua efek confetti -->
+  <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.9.3/dist/confetti.browser.min.js"></script>
+  <!-- AOS (Animate On Scroll) library -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+  <script src="data.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,8 @@
+Taruh file musik ulang tahun kamu di sini dengan nama:
+
+birthday-song.mp3
+
+Kalau nama filenya beda, ubah juga path-nya di data.js pada bagian "music".
+
+Selama file ini belum diganti dengan file .mp3 asli, tombol musik
+di website tetap muncul tapi otomatis nonaktif (tidak akan error).
